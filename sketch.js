@@ -35,17 +35,22 @@ path.velocityX = -5;
 trex = createSprite(50,180,20,50);
 trex.addAnimation("running", trex_running);
 trex.scale = 0.5;
+trex.setCollider("circle",0,0,50);
+trex.debug = true;
+score = 0
+
+fruitGroup = new Group();
 }
 
 
 
 
-score = 0
+
 
 function draw() {
 background(180);
  //scoring
- score = score + Math.round(frameCount/150);
+ //score = score + Math.round(frameCount/150);
 
 edges = createEdgeSprites();
 
@@ -56,13 +61,13 @@ if(keyDown("Down")){
     trex.y = trex.y +  5;
 }
 
-fruitGroup = new Group();
+
 
 if (path.x < 0){
     path.x = path.width/2;
   }
 
-  if(fruitGroup.isTouching(trex)){
+  if(trex.isTouching(fruitGroup)){
       score = score + 1;
       fruitGroup.destroyEach();
   }
@@ -76,16 +81,16 @@ spawnFruits();
 drawSprites();
 textSize(20);
 fill(255);
-text("Score:0 ",1100,50); 
+text("Score: "+score,1100,50); 
 }
 
 function spawnFruits(){
-if (World.frameCount % 300 == 0) {
- var fruits = createSprite(Math.round(random(1500,400), 10, 50));
+if (frameCount % 100 == 0) {
+ var fruits = createSprite(1100,Math.round(random(50,250)),20,20);
  fruits.addImage(fruitImg) 
  fruits.scale = 0.1;
- fruits.velocityX = -1;
- fruits.lifeTime = 200;
+ fruits.velocityX = -3;
+ fruits.lifetime = 450;
  fruitGroup.add(fruits);
 
 
